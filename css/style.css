@@ -1,0 +1,121 @@
+body, html {
+    margin: 0;
+    font: 1em "Open Sans", sans-serif;
+
+}
+
+*, *::after, *::before {
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-app-region: no-drag;
+    cursor: default;
+}
+
+.nav-main{
+    width: 100%;
+    background-color: #ffcc00;
+    height:70px;
+    color: #fff;
+}
+
+.nav-header{
+    float:left;
+    height: 40px;
+    padding: 15px 30px;
+    font-size: 1.4em;
+    line-height: 40px;
+}
+
+.nav-container{
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style-type: none;
+}
+
+.dropdown{
+    float:left;
+}
+
+.dropdown-toggle {
+    display: inline-block;
+    padding: 15px 20px;
+    height: 40px;
+    line-height:40px;
+    color: aqua;
+    text-decoration: none;
+}
+
+.dropdown-toggle:hover {
+    background-color: #444;
+    
+}
+
+.dropdown-menu {
+    position:absolute;
+    padding:0;
+    top:73px;
+    overflow:hidden;
+    background-color: aqua;
+    max-height: 0;
+    list-style-type: none;
+    border-radius: 5px;
+}
+
+.dropdown-item {
+    padding:1px 3px;
+}
+
+.dropdown-item a:hover{
+    background-color: black;
+}
+
+.dropdown-item a{
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+    text-decoration:none;
+    border-radius: 5px;
+}
+
+.dropdown-toggle:focus{
+    background-color: #444;
+}
+
+.dropdown-toggle:focus ~ .dropdown-menu {
+    max-height: 400px;
+    -webkit-transition: max-height 0.4s ease-in;
+    -moz-transition: max-height 0.4s ease-in;
+    transition: max-height 0.4s ease-in;
+}
+
+#board {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+td {
+    height: 26px;
+    width: 26px;
+    border: 1px solid black;
+}
+
+.unvisited {
+    background-color:  white;
+}
+
+.wall {
+    background-color: red;
+}
+
+.start {
+    background-image: url(../icons/start.jpg);
+    background-size: 100% 100%;
+}
+
+.goal {
+    background-image: url(../icons/goal.jpg);
+    background-size: 100% 100%;
+}
