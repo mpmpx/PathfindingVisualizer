@@ -1,3 +1,5 @@
+
+//Initialize the board
 function boardInit() {
     var table = '';
     for (i = 0; i < window.innerHeight / 26; i++) {
@@ -14,6 +16,17 @@ window.addEventListener('load', boardInit());
 document.getElementById("10-10").className = 'start';
 document.getElementById("10-30").className = 'goal';
 
+
+//Bind events to buttons
+var algoButtons = document.getElementById('algo-menu').children;
+for (i = 0; i < algoButtons.length; i++) {
+    algoButtons[i].onmousedown = function() {
+        document.getElementById('visualization-button').innerHTML = 'Visualize ' + this.innerHTML;
+    }
+}
+
+
+//Animation for cells
 var isMouseDown = false;
 var isStartSelected = false;
 var isGoalSelected = false;
@@ -34,7 +47,7 @@ var colNum = document.getElementById("board").rows[0].cells.length;
 
 for (i = 0; i < rollNum; i++) {
     for (j = 0; j < colNum; j++) {
-        document.getElementById(`${i}-${j}`).addEventListener('mousedown', function() {
+        document.getElementById(`${i}-${j}`).onmousedown = function() {
             isMouseDown = true;
             if (this.className === 'start') {
                 isStartSelected = true;
@@ -45,13 +58,13 @@ for (i = 0; i < rollNum; i++) {
             else {
                 changeCellColor(this);
             }
-        });
-        document.getElementById(`${i}-${j}`).addEventListener('mouseup', function() {
+        };
+        document.getElementById(`${i}-${j}`).onmouseup =  function() {
             isStartSelected = false;
             isGoalSelected = false;
             isMouseDown = false;
-        });
-        document.getElementById(`${i}-${j}`).addEventListener('mouseenter', function() {
+        };
+        document.getElementById(`${i}-${j}`).onmouseenter = function() {
             if (isStartSelected && this.className !== 'goal') {
                 document.getElementsByClassName('start')[0].className = 'unvisited';
                 this.className = 'start';
@@ -60,9 +73,9 @@ for (i = 0; i < rollNum; i++) {
                 document.getElementsByClassName('goal')[0].className = 'unvisited';
                 this.className = 'goal';
             }
-            
             changeCellColor(this);
-           
-        });
+        };
     }
 }
+
+
