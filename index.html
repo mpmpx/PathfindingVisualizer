@@ -3,25 +3,23 @@
 <head>
     <title>Pathfinding Visualizer</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-
+    
 </head>
 <body>
     <nav class='nav-main'>
         <div class='nav-header'>Pathfinding Visualizer</div>
-        <ul class='nav-container'>
-            <li class='dropdown'>
-                <a href="#" id='algorithm-button' class='dropdown-toggle'>Algorithm</a>
-                <ul class='dropdown-menu'>
-                    <li class='dropdown-item'><a href="#">Depth-first search</a></li>
-                    <li class='dropdown-item'><a href="#">Breadth-first search</a></li>
-                    <li class='dropdown-item'><a href='#'>Dijkstra's algorithm</a></li>
-                    <li class='dropdown-item'><a href='#'>A* search</a></li>
-                </ul>
-            </li>
-            <li class='dropdown'>
-                <a href='#' id='visualization-button' class='dropdown-toggle'>Select an algorithm</a>
-            </li>
-        </ul>
+        <div class='dropdown nav-item'>
+            <button class='dropdown-button nav-button' id='algorithm-button' data-toggle="dropdown">Algorithm <i class="fas fa-sort-down"></i></button>
+            <div id='algo-menu' class='dropdown-menu'>
+                <a href="#">Depth-first search</a>
+                <a href="#">Breadth-first search</a>
+                <a href="#">Dijkstra's Algorithm</a>
+                <a href="#">A* search</a>
+            </div>
+        </div>
+        <div class='nav-item'>
+            <button class='nav-button' id='visualization-button'>Select an Algorithm</button>
+        </div>
     </nav>
     <div class='main'>
         <div></div>
@@ -29,4 +27,6 @@
     </div>
 </body>
 </html>
+
 <script src="js/bundle.js"></script>
+<script src="https://kit.fontawesome.com/d0cc2508c7.js" crossorigin="anonymous"></script>
