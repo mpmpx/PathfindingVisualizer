@@ -139,13 +139,10 @@ for (i = 0; i < rollNum; i++) {
         document.getElementById(`${i}-${j}`).onmouseenter = function() {
             if (isStartSelected && this.className !== 'goal') {
                 document.getElementsByClassName('start')[0].className = 'unvisited';
-                
+                this.className = 'start';
                 if (isAlgoSelected) {
                     
                     runAlgorithm(onAnimatio=false);
-                }
-                else {
-                    this.className = 'start';
                 }
             }
             if (isGoalSelected && this.className !== 'start') {
