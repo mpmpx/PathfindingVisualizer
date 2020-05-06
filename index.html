@@ -11,14 +11,14 @@
         <div class='dropdown nav-item'>
             <button class='dropdown-button nav-button' id='algorithm-button' data-toggle="dropdown">Algorithm <i class="fas fa-sort-down"></i></button>
             <div id='algo-menu' class='dropdown-menu'>
-                <a href="#">Depth-first search</a>
-                <a href="#">Breadth-first search</a>
-                <a href="#">Dijkstra's Algorithm</a>
-                <a href="#">A* search</a>
+                <a id='dfs' href="#">Depth-first search</a>
+                <a id='bfs' href="#">Breadth-first search</a>
+                <a id='dijkstra' href="#">Dijkstra's Algorithm</a>
+                <a id='astar' href="#">A* search</a>
             </div>
         </div>
         <div class='nav-item'>
-            <button class='nav-button' id='visualization-button'>Select an Algorithm</button>
+            <button class='nav-button no-algorithm' id='visualization-button'>Visualize</button>
         </div>
     </nav>
     <div class='main'>
@@ -29,4 +29,7 @@
 </html>
 
 <script src="js/bundle.js"></script>
+<script src="js/util.js"></script>
+<script src="js/algorithm.js"></script>
+<script src="js/animation.js"></script>
 <script src="https://kit.fontawesome.com/d0cc2508c7.js" crossorigin="anonymous"></script>
