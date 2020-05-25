@@ -13,17 +13,19 @@ body, html {
 
 .nav-main {
     overflow: hidden;
-    background-color: #333;
+    background-color: #aebfa0;
 }
 
 .nav-header{
     float:left;
     height: 40px;
     padding: 10px 20px;
-    font-size: 1.4em;
+    font-size: 1.8em;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
     line-height: 40px;
     font-weight: bold;
     display: block;
+    color: white
 }
 
 .nav-item{
@@ -35,16 +37,17 @@ body, html {
 .nav-button {
   font-size: 16px;  
   border: none;
+  border-radius: 14px;
   outline: none;
   color: white;
   padding: 14px 16px;
   background-color: inherit;
-  font-family: inherit;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
   margin: 0;
 }
 
 .nav-item:hover .nav-button {
-    background-color: aqua; 
+    background-color: #bfbfbf; 
 }
 
 .dropdown-menu {
@@ -57,7 +60,7 @@ body, html {
   z-index: 1;
 }
 
-.dropdown-menu a {
+.dropdown-menu a {font-family: "Trebuchet MS", Arial, sans-serif;
   float: none;
   color: black;
   padding: 12px 16px;
@@ -92,7 +95,7 @@ body, html {
 td {
     height: 26px;
     width: 26px;
-    border: 1px solid black;
+    border: 1px solid rgb(225,238,210);
 }
 
 .unvisited {
@@ -100,43 +103,75 @@ td {
 }
 
 .wall {
-    background-color: red;
+    background-color: rgb(18,53,85);
     animation-name: appear;
     animation-duration: 0.5s;
+    border: none;
 }
 
 .search {
-    background-color: rgb(0, 190, 218);
-    animation-name: visitedStartNodeBlueAnimation;
+    background-color: rgb(209, 141, 134);
+    animation-name: searchAnimation;
     animation-duration: 1.0s;
 }
 
 .search-no-animation {
-    background-color: rgb(0, 190, 218);
+    background-color: rgb(209, 141, 134);
 }
 .shortest-path {
-    background-color: black;
+    background-color: rgb(255, 212, 97);
+    animation-name: shortestPathAnimation;
     animation-duration: 1.0s;
 }
 
 .shortest-path-no-animation {
-    background-color: black;
+    background-color: rgb(255, 212, 97);
 }
 
-.start, .goal{
+.start, .start-search, .start-shortest-path, .goal, .goal-search, .goal-shortest-path {
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    animation-name: appear;
-    animation-duration: 0.5s;
     background-position: center;
 }
 
 .start {
     background-image: url(../icons/start.jpg);
+    animation-name: appear;
+    animation-duration: 1.0s;
+}
+
+.start-search {
+    background-image: linear-gradient(rgb(209, 141, 134),rgb(209, 141, 134)), url(../icons/start.jpg);
+    background-blend-mode: multiply;
+    animation-name: searchAnimation;
+    animation-duration: 0.3s;
+}
+
+.start-shortest-path {
+    background-image: linear-gradient(rgb(255, 212, 97), rgb(255, 212, 97)), url(../icons/start.jpg);
+    background-blend-mode: multiply;
+    animation-name: shortestPathAppear;
+    animation-duration: 1.0s;
 }
 
 .goal {
     background-image: url(../icons/goal.jpg);
+    animation-name: appear;
+    animation-duration: 1.0s;
+}
+
+.goal-search {
+    background-image: linear-gradient(rgb(209, 141, 134),rgb(209, 141, 134)), url(../icons/goal.jpg);
+    background-blend-mode: multiply;
+    animation-name: searchAnimation;
+    animation-duration: 0.3s;    
+}
+
+.goal-shortest-path {
+    background-image: linear-gradient(rgb(255, 212, 97), rgb(255, 212, 97)), url(../icons/goal.jpg);
+    background-blend-mode: multiply;
+    animation-name: shortestPathAppear;
+    animation-duration: 1.0s;
 }
 
 @keyframes appear {
@@ -144,26 +179,55 @@ td {
     100% {transform: scale(1);}
 }
 
-@keyframes visitedStartNodeBlueAnimation {
+@keyframes shortestPathAppear {
+    0% {transform: scale(.5);}
+    100% {transform: scale(1);}
+}
+
+@keyframes searchAnimation {
     0% {
         transform: scale(.3);
-        background-color: rgb(0, 0, 66);
+        background-color: rgb(209,73,78);
         opacity: 0.3;
     }
 
     50% {
-        background-color: rgb(17, 104, 217);
+        background-color: rgb(153, 0, 0);
         opacity: 0.6;
     }
 
     75% {
         transform: scale(1.2);
-        background-color: rgb(17, 104, 217);
+        background-color: rgb(153, 0, 0);
     }
 
     100% {
         transform: scale(1.0);
-        background-color: rgb(0, 190, 218);
+        background-color: rgb(209, 141, 134);
         opacity: 1;
     }
+}
+
+@keyframes shortestPathAnimation {
+    0% {
+        transform: scale(.3);
+        background-color: rgb(250, 255, 114);
+        opacity: 0.3;
+    }
+
+    50% {
+        background-color: rgb(230, 155, 3);
+        opacity: 0.6;
+    }
+
+    75% {
+        transform: scale(1.2);
+        background-color: rgb(230, 155, 3);
+    }
+
+    100% {
+        transform: scale(1.0);
+        background-color: rgb(255, 212, 97);
+        opacity: 1;
+    }    
 }

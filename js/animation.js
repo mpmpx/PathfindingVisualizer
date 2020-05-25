@@ -1,17 +1,35 @@
 function searchAnimation(visited, shortest) {
+    var start = document.getElementsByClassName('start')[0];
+    var goal = document.getElementsByClassName('goal')[0];
+    
+    if (start === undefined) {
+        start = document.getElementsByClassName("start-shortest-path")[0];
+    }
+    if (goal === undefined) {
+        goal = document.getElementsByClassName("goal-shortest-path")[0];
+    }
+    
+    goal.className = 'goal';
     document.getElementsByTagName('html')[0].style['pointer-events'] = 'none';
+    start.className = 'start-search'
+
     var i = 0;
-    var searching = setInterval(function() {
+    var searching = setInterval(function() {    
         i++;
         if (i === visited.length - 2) {
+            goal.className = 'goal-search';
             clearInterval(searching);
+            
+            document.getElementsByClassName('start-search')[0].className = 'start-shortest-path';
             var j = 0;
             var showPath = setInterval(function() {
                 j++;
                 if (j === shortest.length - 2) {
+                    document.getElementsByClassName('goal-search')[0].className = 'goal-shortest-path';
                     clearInterval(showPath);
                     document.getElementsByTagName('html')[0].style['pointer-events'] = 'auto';
                 }
+                
                 document.getElementById(shortest[j]).className = 'shortest-path';
             }, 20);
         }
