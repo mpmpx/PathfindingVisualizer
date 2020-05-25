@@ -54,12 +54,17 @@ function PriorityQueue() {
         this.arr.push(element);
         while (ptr >= 0) {
             var parentIndex = this.getParentIndex(ptr);
-            if (this.comparator(this.arr[ptr], this.arr[parentIndex])) {
+            
+            if (parentIndex === undefined) {
+                break;
+            }
+            else if (this.comparator(this.arr[ptr], this.arr[parentIndex])) {
                 this.swap(parentIndex, ptr);
             }
             else {
                 break;
             }
+            
             ptr = parentIndex;
         }
     };
@@ -108,7 +113,8 @@ function PriorityQueue() {
         return element;
     };
     
-    this.comparator = (a, b) => a < b;
+    this.comparatorUtil = (a) => a;
+    this.comparator = (a, b) => this.comparatorUtil(a) <= this.comparatorUtil(b);
     this.isEmpty = () => this.arr.length === 0;
     this.getParentIndex = (i) => i === 0 ? undefined : Math.ceil(i / 2.0) - 1;
     this.getChildIndex = (i) => [2 * i + 1, 2 * i + 2];
@@ -133,4 +139,15 @@ function getSuccessors(state) {
     successors.push('' + (row - 1) + '-' + col);
 
     return successors;
+}
+
+function manhattanDistance(a, b) {
+    var a = a.split('-');
+    var b = b.split('-');
+    var ax =  parseInt(a[0]);
+    var ay =  parseInt(a[1]);
+    var bx =  parseInt(b[0]);
+    var by =  parseInt(b[1]);
+    
+    return Math.abs(ax - bx) + Math.abs(ay - by);
 }

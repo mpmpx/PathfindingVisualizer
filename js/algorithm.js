@@ -49,4 +49,19 @@ function BFS(board, onAnimation=true) {
     }
 }
 
-
+function Astar(board, onAnimation=true) {
+    var pq = new PriorityQueue();
+    pq.comparatorUtil = (state) => {
+        var g_n = state[1].length;
+        var h_n = manhattanDistance(state[0], board.goal());
+        return g_n + h_n;
+    }
+    
+    var result = genericSearch(board, pq);
+    if (onAnimation) {
+        searchAnimation(result[0], result[1]);
+    }
+    else {
+        searchNoAnimation(result[0], result[1]);
+    }    
+}

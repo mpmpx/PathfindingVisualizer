@@ -70,13 +70,27 @@ document.getElementById('visualization-button').onclick = function() {
 };
 
 
-document.getElementById('clear-button').addEventListener('click', function() {
+document.getElementById('clear-wall-button').addEventListener('click', function() {
     var td = document.getElementsByTagName('td');
     for (i = 0; i < td.length; i++) {
         if (td[i].className === 'wall') {
             td[i].className = 'unvisited';
         }
     }
+});
+
+document.getElementById('clear-path-button').addEventListener('click', function() {
+    var td = document.getElementsByTagName('td');
+    var classList = ['shortest-path', 'shortest-path-no-animation', 'search', 'search-no-animation'];
+    for (i = 0; i < td.length; i++) {
+        if (classList.includes(td[i].className)) {
+            td[i].className = 'unvisited';
+        }
+    }
+    
+    document.getElementsByClassName('start-shortest-path')[0].className = "start";
+    document.getElementsByClassName('goal-shortest-path')[0].className = "goal";
+    isAlgoSelected = false;
 });
 
 document.getElementById('restart-button').addEventListener('click', function() {
@@ -88,8 +102,8 @@ document.getElementById('restart-button').addEventListener('click', function() {
     }
     visualButton.classList.remove(visualButton.classList[1]);
     visualButton.classList.add("no-algorithm");
-    visualButton.innerHTML = "Visualize"
-    isAlgorithmSelected = false;
+    visualButton.innerHTML = "Visualize";
+    isAlgoSelected = false;
     
     var offsetHeight = document.getElementsByClassName('nav-header')[0].offsetHeight;
     var height = window.innerHeight - offsetHeight * 3.4;
@@ -125,7 +139,7 @@ function runAlgorithm(onAnimation) {
             BFS(board, onAnimation);
             break;
         case 'astar':
-            alert('astar');
+            Astar(board, onAnimation);
     }
 }
 
