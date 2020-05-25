@@ -24,7 +24,7 @@ function searchAnimation(visited, shortest) {
             var j = 0;
             var showPath = setInterval(function() {
                 j++;
-                if (j === shortest.length - 2) {
+                if (shortest.length < 2 || j === shortest.length - 2) {
                     document.getElementsByClassName('goal-search')[0].className = 'goal-shortest-path';
                     clearInterval(showPath);
                     document.getElementsByTagName('html')[0].style['pointer-events'] = 'auto';
