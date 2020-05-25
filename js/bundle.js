@@ -1,3 +1,31 @@
+function Board() {
+    this.start = () => {
+        if (document.getElementsByClassName('start')[0] !== undefined) {
+            return document.getElementsByClassName('start')[0].id;
+        }
+        else {
+            return document.getElementsByClassName('start-shortest-path')[0].id;
+        }
+    };
+    this.goal = () => {
+        if (document.getElementsByClassName('goal')[0] !== undefined) {
+            return document.getElementsByClassName('goal')[0].id;
+        }
+        else {
+            return document.getElementsByClassName('goal-shortest-path')[0].id;
+        }
+    };
+    this.unvisited = new Set();
+    var unvisitedClass = document.getElementsByClassName('unvisited');
+    for (i = 0; i < unvisitedClass.length; i++) {
+        this.unvisited.add(unvisitedClass[i].id);
+    }
+    this.wall = [];
+    var wallElements = document.getElementsByClassName('wall');
+    for (i = 0; i < wallElements.length; i++) {
+        this.wall.push(wallElements[i].id);
+    }
+}
 
 //Initialize the board
 function boardInit() {
@@ -13,7 +41,6 @@ function boardInit() {
         table += `<//tr>`;
     }
 
-
     document.getElementById("board").innerHTML=table;
     startPos = `${Math.floor(height / 26 / 2)}-${Math.floor(width / 26 / 3.5)}`;
     goalPos = `${Math.floor(height / 26 / 2)}-${Math.floor(width / 26 / 1.5)}`;    
@@ -25,22 +52,53 @@ window.addEventListener('load', boardInit());
 
 
 function clearBoard() {
-    var start = document.getElementsByClassName('start')[0].id;
-    var goal = document.getElementsByClassName('goal')[0].id;
-    
+    var classList = ['start', 'goal', 'start-shortest-path', 'goal-shortest-path', 'wall'];
     var td = document.getElementsByTagName('td');
-    for (i = 0; i < td.length; i++) {
-        if (td[i].className !== 'wall') {
-            
-        
-        td[i].className = 'unvisited';
     
+    for (i = 0; i < td.length; i++) {
+        if (!classList.includes(td[i].className)) {
+            td[i].className = 'unvisited';
         }
     }
-    document.getElementById(start).className = 'start';
-    document.getElementById(goal).className = 'goal';
 }
 
+var isAlgoSelected = false;
+
+document.getElementById('visualization-button').onclick = function() {
+    isAlgoSelected = true;
+    runAlgorithm(onAnimation=true);
+};
+
+
+document.getElementById('clear-button').addEventListener('click', function() {
+    var td = document.getElementsByTagName('td');
+    for (i = 0; i < td.length; i++) {
+        if (td[i].className === 'wall') {
+            td[i].className = 'unvisited';
+        }
+    }
+});
+
+document.getElementById('restart-button').addEventListener('click', function() {
+    var visualButton = document.getElementById('visualization-button');
+    var td = document.getElementsByTagName('td');
+    
+    for (i = 0; i < td.length; i++) {
+        td[i].className = 'unvisited';
+    }
+    visualButton.classList.remove(visualButton.classList[1]);
+    visualButton.classList.add("no-algorithm");
+    visualButton.innerHTML = "Visualize"
+    isAlgorithmSelected = false;
+    
+    var offsetHeight = document.getElementsByClassName('nav-header')[0].offsetHeight;
+    var height = window.innerHeight - offsetHeight * 3.4;
+    var width = window.innerWidth;
+    startPos = `${Math.floor(height / 26 / 2)}-${Math.floor(width / 26 / 3.5)}`;
+    goalPos = `${Math.floor(height / 26 / 2)}-${Math.floor(width / 26 / 1.5)}`;    
+    document.getElementById(startPos).className = 'start';
+    document.getElementById(goalPos).className = 'goal';
+});
 
 //Bind events to buttons
 var algoButtons = document.getElementById('algo-menu').children;
@@ -53,28 +111,12 @@ for (i = 0; i < algoButtons.length; i++) {
     };
 }
 
-function Board() {
-    this.start = document.getElementsByClassName('start')[0].id;
-    this.goal = document.getElementsByClassName('goal')[0].id;
-    this.unvisited = new Set();
-    var unvisitedClass = document.getElementsByClassName('unvisited');
-    for (i = 0; i < unvisitedClass.length; i++) {
-        this.unvisited.add(unvisitedClass[i].id);
-    }
-    this.wall = [];
-    var wallElements = document.getElementsByClassName('wall');
-    for (i = 0; i < wallElements.length; i++) {
-        this.wall.push(wallElements[i].id);
-    }
-}
-
-
 function runAlgorithm(onAnimation) {
     clearBoard();
     var board = new Board();
     switch (document.getElementById('visualization-button').classList[1]) {
         case 'no-algorithm':
-            this.innerHTML = 'Select an algorithm';
+            document.getElementById('visualization-button').innerHTML = 'Select an algorithm';
             break;
         case 'dfs':
             DFS(board, onAnimation);
@@ -82,20 +124,12 @@ function runAlgorithm(onAnimation) {
         case 'bfs':
             BFS(board, onAnimation);
             break;
-        case 'dijkstra':
-            alert('dijkstra');
-            break;
         case 'astar':
             alert('astar');
     }
 }
 
-var isAlgoSelected = false;
 
-document.getElementById('visualization-button').onclick = function() {
-    isAlgoSelected = true;
-    runAlgorithm(onAnimation=true);
-};
 
 //Animation for cells
 var isMouseDown = false;
@@ -116,15 +150,19 @@ function changeCellColor(cell) {
 
 var rollNum = document.getElementById("board").rows.length;
 var colNum = document.getElementById("board").rows[0].cells.length;
+var isTempCovered = false;
+var startList = ["start", "start-search", "start-shortest-path"];
+var goalList = ["goal", "goal-search", "goal-shortest-path"];
 
 for (i = 0; i < rollNum; i++) {
     for (j = 0; j < colNum; j++) {
         document.getElementById(`${i}-${j}`).onmousedown = function() {
             isMouseDown = true;
-            if (this.className === 'start') {
+            
+            if (startList.includes(this.className)) {
                 isStartSelected = true;
             }
-            if (this.className === 'goal') {
+            else if (goalList.includes(this.className)) {
                 isGoalSelected = true;
             }
             else {
@@ -137,20 +175,48 @@ for (i = 0; i < rollNum; i++) {
             isMouseDown = false;
         };
         document.getElementById(`${i}-${j}`).onmouseenter = function() {
-            if (isStartSelected && this.className !== 'goal') {
-                document.getElementsByClassName('start')[0].className = 'unvisited';
+            if (isStartSelected && !goalList.includes(this.className)) {
+                var start = 'start';
+                if (document.getElementsByClassName("start-shortest-path")[0] !== undefined) {
+                    start = "start-shortest-path";
+                }
                 
-                if (isAlgoSelected) {
-                    
-                    runAlgorithm(onAnimatio=false);
+                if (isTempCovered) {
+                    document.getElementsByClassName(start)[0].className = 'wall';
+                    isTempCovered = false;
                 }
                 else {
-                    this.className = 'start';
+                    document.getElementsByClassName(start)[0].className = 'unvisited';
+                }
+                
+                if(this.className === 'wall') {
+                    isTempCovered = true;
+                }
+                
+                this.className = start;
+                if (isAlgoSelected) {
+                    runAlgorithm(onAnimation=false);
                 }
             }
-            if (isGoalSelected && this.className !== 'start') {
-                document.getElementsByClassName('goal')[0].className = 'unvisited';
-                this.className = 'goal';
+            if (isGoalSelected && !startList.includes(this.className)) {
+                var goal = 'goal';
+                if (document.getElementsByClassName("goal-shortest-path")[0] !== undefined) {
+                    goal = "goal-shortest-path";
+                }
+                
+                if (isTempCovered) {
+                    document.getElementsByClassName(goal)[0].className = 'wall';
+                    isTempCovered = false;
+                }
+                else {
+                    document.getElementsByClassName(goal)[0].className = 'unvisited';
+                }
+                
+                if(this.className === 'wall') {
+                    isTempCovered = true;
+                }
+                
+                this.className = goal;
                 if (isAlgoSelected) {
                     runAlgorithm(onAnimation=false);
                 }

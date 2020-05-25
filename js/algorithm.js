@@ -1,6 +1,6 @@
 function genericSearch(board, openList) {
     var visited = [];
-    var firstState = [board.start, [board.start]];
+    var firstState = [board.start(), [board.start()]];
     openList.push(firstState);
     
     while (!openList.isEmpty()) {
@@ -12,7 +12,7 @@ function genericSearch(board, openList) {
         } while(visited.includes(currentState[0]) || board.wall.includes(currentState[0]));
         
         visited.push(currentState[0]);
-        if (currentState[0] === board.goal) {
+        if (currentState[0] === board.goal()) {
             return [visited, currentState[1]];
         }
         
